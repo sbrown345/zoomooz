@@ -911,7 +911,7 @@ if(!$.zoomooz) {
 
     // document.ready needed for scroll bar width
     // calculation
-    setupCssStyles();
+    //setupCssStyles(); - do manually instead
 
     //**********************************//
     //***  jQuery functions          ***//
@@ -925,7 +925,13 @@ if(!$.zoomooz) {
     $.zoomooz.setup = function(settings) {
         $.zoomooz.defaultSettings = jQuery.extend(constructDefaultSettings(), settings);
     };
-
+	
+    /* manually add styles to required page (e.g. on an iframe and ignore the main page) */
+    $.zoomooz.setupCssStyles = function(doc) {
+        doc = doc || document;
+        setupCssStyles(doc);
+    };
+	
     /* returns the zooming settings of a particular element. used by zoomTarget. */
     $.fn.zoomSettings = function(settings) {
         var retValue;
@@ -1001,7 +1007,7 @@ if(!$.zoomooz) {
 
     /* setup css styles in javascript to not need an extra zoomooz.css file for the user to load.
        having the styles here helps also at keeping the css requirements minimal. */
-    function setupCssStyles() {
+    function setupCssStyles(document) {
         var style = document.createElement('style');
         style.type = 'text/css';
 
@@ -1029,7 +1035,7 @@ if(!$.zoomooz) {
         var retObject = {
             targetsize: 0.9,
             scalemode: "both",
-            root: $(document.body),
+            root: $(document.body),			
             debug: false,
             animationendcallback: null,
             closeclick: false
