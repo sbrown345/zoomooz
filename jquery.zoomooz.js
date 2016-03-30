@@ -647,7 +647,7 @@ if(!$.zoomooz) {
         var m = matrix.elements();
         var a=m.a, b=m.b, c=m.c, d=m.d, e=m.e, f=m.f;
 
-        if(Math.abs(a*d-b*c)<0.001) {
+        if(Math.abs(a*d-b*c)<0.01) {
             console.log("fail!");
             return;
         }
@@ -1016,9 +1016,9 @@ if(!$.zoomooz) {
                           ".noScroll{overflow:hidden !important;}" +
                           "* {"+transformOrigin+"}";
 
-        document.getElementsByTagName('head')[0].appendChild(style);
 
-        $(document).ready(function() {
+        $(document).ready(function () {
+            document.getElementsByTagName('head')[0].appendChild(style);
             var scrollBarWidth = window.innerWidth - $("body").width();
             style.innerHTML += "body.noScroll,html.noScroll body{margin-right:"+scrollBarWidth+"px;}";
         });
@@ -1568,10 +1568,9 @@ if(!$.zoomooz) {
     //***  Static setup              ***//
     //**********************************//
 
-    setupCssStyles();
-
     // make all elements with the zoomTarget class zooming
-    $(document).ready(function() {
+    $(document).ready(function () {
+        setupCssStyles();
         // this needs to be after the "$.fn.zoomTarget" has been initialized
         $(".zoomTarget").zoomTarget();
     });
@@ -1620,11 +1619,10 @@ if(!$.zoomooz) {
     //***  Static setup              ***//
     //**********************************//
 
-    // FIXME: move zoomContainer styling here?
-    //setupCssStyles();
-
     // make all elements with the zoomContainer class zooming containers
-    $(document).ready(function() {
+    $(document).ready(function () {
+        // FIXME: move zoomContainer styling here?
+        //setupCssStyles();
         // this needs to be after the "$.fn.zoomContainer" has been initialized
         $(".zoomContainer").zoomContainer();
     });
@@ -1767,31 +1765,24 @@ if(!$.zoomooz) {
                 $selected = displayList.first();
             }
 
-            switch (settings.type) {
-                case "close":
-                    target = $root;
-                    break;
-                case "prev":
-                    target = displayList.prev($selected[0]);
-                    if (target === null) {
-                        if (settings.wrap) {
-                            target = displayList.last();
-                        } else {
-                            performZoom = false;
-                        }
+            if(settings.type.indexOf("prev")===0) {
+                target = displayList.prev($selected[0]);
+                if(target === null) {
+                    if(settings.wrap) {
+                        target = displayList.last();
+                    } else {
+                        performZoom = false;
                     }
-                    break;
-                case "next":
-                default:
-                    target = displayList.next($selected[0]);
-                    if (target === null) {
-                        if (settings.wrap) {
-                            target = displayList.first();
-                        } else {
-                            performZoom = false;
-                        }
+                }
+            } else {
+                target = displayList.next($selected[0]);
+                if(target === null) {
+                    if(settings.wrap) {
+                        target = displayList.first();
+                    } else {
+                        performZoom = false;
                     }
-                    break;
+                }
             }
 
             if(performZoom) {
