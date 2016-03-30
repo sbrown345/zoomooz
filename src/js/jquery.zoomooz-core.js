@@ -64,7 +64,7 @@
 
     // document.ready needed for scroll bar width
     // calculation
-    //setupCssStyles();
+    //setupCssStyles(); - do manually instead
 
     //**********************************//
     //***  jQuery functions          ***//
@@ -81,7 +81,7 @@
 	
     /* manually add styles to required page (e.g. on an iframe and ignore the main page) */
     $.zoomooz.setupCssStyles = function(doc) {
-		doc = doc || document;
+        doc = doc || document;
         setupCssStyles(doc);
     };
 	
@@ -188,8 +188,7 @@
         var retObject = {
             targetsize: 0.9,
             scalemode: "both",
-            root: $(document.body),
-			document: document,
+            root: $(document.body),			
             debug: false,
             animationendcallback: null,
             closeclick: false
